@@ -4,8 +4,8 @@ const searchInput = document.querySelector(".js_searchInput");
 const serachButton = document.querySelector(".js_seachButton");
 const animeList = document.querySelector(".js_animeList");
 //DATOS
-
-const allAnimes = [
+let allAnimes = [];
+/* const allAnimes = [
   {
     title: "Naruto",
     image: "https://cdn.myanimelist.net/images/anime/1141/142503.jpg",
@@ -16,7 +16,7 @@ const allAnimes = [
     image: "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png",
     alt: "un anime",
   },
-];
+]; */
 
 //FUNCIONES
 function renderOneAnime(oneAnime) {
@@ -44,4 +44,10 @@ function renderAllAnimes() {
 }
 
 //Cuando carga la página
-renderAllAnimes();
+fetch("https://api.jikan.moe/v4/anime?q=naruto")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    allAnimes = data.data;
+    renderAllAnimes();
+  });
