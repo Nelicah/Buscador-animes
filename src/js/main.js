@@ -14,6 +14,7 @@ function renderOneAnime(oneAnime) {
       src=${oneAnime.images.jpg.image_url}
       alt=${oneAnime.title}
       />
+      <p> ${oneAnime.title_english} </p>
       <p> ${oneAnime.title} </p>
     </li>`;
 
