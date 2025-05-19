@@ -1,30 +1,18 @@
 "use strict";
 
 const searchInput = document.querySelector(".js_searchInput");
-const serachButton = document.querySelector(".js_seachButton");
+const searchButton = document.querySelector(".js_searchButton");
 const animeList = document.querySelector(".js_animeList");
 //DATOS
 let allAnimes = [];
-/* const allAnimes = [
-  {
-    title: "Naruto",
-    image: "https://cdn.myanimelist.net/images/anime/1141/142503.jpg",
-    alt: "Naruto",
-  },
-  {
-    title: "un anime",
-    image: "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png",
-    alt: "un anime",
-  },
-]; */
 
 //FUNCIONES
 function renderOneAnime(oneAnime) {
   //renderizamos desde JS el html de un anime
   const html = `<li>
       <img 
-      src=${oneAnime.image}
-      alt=${oneAnime.alt}
+      src=${oneAnime.images.jpg.image_url}
+      alt=${oneAnime.title}
       />
       <p> ${oneAnime.title} </p>
     </li>`;
@@ -43,11 +31,18 @@ function renderAllAnimes() {
   animeList.innerHTML = html;
 }
 
+function handleClickSearchButton(ev) {
+  ev.preventDefault();
+  const anime = searchInput.value;
+  fetch(`https://api.jikan.moe/v4/anime?q=${anime}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      allAnimes = data.data;
+      renderAllAnimes();
+    });
+}
+searchButton.addEventListener("click", handleClickSearchButton);
+//EVENTOS
+
 //Cuando carga la página
-fetch("https://api.jikan.moe/v4/anime?q=naruto")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    allAnimes = data.data;
-    renderAllAnimes();
-  });
