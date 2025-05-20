@@ -5,10 +5,29 @@
 }
 
 .animePicture {
-  width: 200px;
+  width: 100%;
   
 }
 
 .animeTitle {
   font-size: 20px;
+}
+
+.totalAnimes {
+  display:flex;
+  gap: 20px;
+}
+
+.liAnime {
+  list-style: none;
+  box-sizing: content-box;
+  width: 230px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.favourites {
+  border: solid 6px darkgrey;
+  background-color: black;
+  color: white;
 }
