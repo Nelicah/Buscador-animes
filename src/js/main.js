@@ -13,24 +13,26 @@ resultTitle.appendChild(resultContent);
 // creando sección de los favoritos
 const favTitle = document.createElement("h2");
 const favContent = document.createTextNode("Series Favoritas");
+const ulFavs = document.createElement("ul");
 favTitle.appendChild(favContent);
 favSection.appendChild(favTitle);
+favSection.appendChild(ulFavs);
 
 //DATOS
 let allAnimes = [];
+let favouritesAnimes = [];
 
 //FUNCIONES
 function renderOneAnime(oneAnime) {
   //renderizamos desde JS el html de un anime
-  const html = `<li class="liAnime js-liAnime" >
-      <img class="animePicture"
+  const html = `<li class="liAnime js-liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="animePicture" 
       src=${oneAnime.images.jpg.image_url}
-      alt=${oneAnime.title}
+      alt="${oneAnime.title}"
       />
       <p> - ${oneAnime.title_english} </p>
       <p> - ${oneAnime.title} </p>
     </li>`;
-
   return html;
 }
 
@@ -55,9 +57,36 @@ function handleClickSearchButton(ev) {
       renderAllAnimes();
 
       const liAnime = document.querySelectorAll(".js-liAnime");
+
       liAnime.forEach((liItems) => {
         liItems.addEventListener("click", (ev) => {
-          console.log(ev.currentTarget);
+          const liClicked = ev.currentTarget;
+
+          liClicked.classList.toggle("favourites");
+
+          // obtenemos el objeto del "li" que hemos hecho click
+          const id_hook = liClicked.dataset.hook;
+
+          //averiguamos si es favorita
+          const oneAnimePositionFromFavs = favouritesAnimes.findIndex(
+            (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
+          );
+
+          //añadimos a fav el anime sólo si no está en la lista (evitamos duplicidad)
+          if (oneAnimePositionFromFavs === -1) {
+            const clickedAnime = allAnimes.find(
+              (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
+            );
+
+            //añadir objeto al array de favoritos
+            favouritesAnimes.push(clickedAnime);
+
+            //generamos otro li a partir de esos datos y así renderizarlo en el html
+            const htmlOneAnime = renderOneAnime(clickedAnime);
+
+            //ponemos el li en  la lista de favoritos
+            ulFavs.innerHTML += htmlOneAnime;
+          }
         });
       });
     });
