@@ -18,11 +18,6 @@ favTitle.appendChild(favContent);
 favSection.appendChild(favTitle);
 favSection.appendChild(ulFavs);
 
-// creando las "x" para eliminar favoritos
-const xImg = document.createElement("img");
-xImg.src = "./images/marca-de-la-cruz.png";
-xImg.alt = "cruz para eliminar favorito";
-
 //DATOS
 let allAnimes = [];
 let favouritesAnimes = [];
@@ -30,7 +25,14 @@ let favouritesAnimes = [];
 //FUNCIONES
 function renderOneAnime(oneAnime) {
   //renderizamos desde JS el html de un anime
-  const html = `<li class="liAnime js-liAnime" data-hook=${oneAnime.mal_id}>
+  //modificado para que aparezca "marcado" si está en fav
+
+  const oneAnimePositionFromFavs = favouritesAnimes.findIndex(
+    (oneAnimeFav) => oneAnimeFav.mal_id === oneAnime.mal_id
+  );
+
+  if (oneAnimePositionFromFavs === -1) {
+    const html = `<li class="liAnime js-liAnime" data-hook=${oneAnime.mal_id}>
       <img class="animePicture" 
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
@@ -38,7 +40,18 @@ function renderOneAnime(oneAnime) {
       <p> - ${oneAnime.title_english} </p>
       <p> - ${oneAnime.title} </p>
     </li>`;
-  return html;
+    return html;
+  } else {
+    const html = `<li class="liAnime js-liAnime favourites" data-hook=${oneAnime.mal_id}>
+      <img class="animePicture" 
+      src=${oneAnime.images.jpg.image_url}
+      alt="${oneAnime.title}"
+      />
+      <p> - ${oneAnime.title_english} </p>
+      <p> - ${oneAnime.title} </p>
+    </li>`;
+    return html;
+  }
 }
 
 function renderAllAnimes() {
@@ -52,12 +65,26 @@ function renderAllAnimes() {
   animeList.innerHTML = html;
 }
 
+function renderOneAnimeFav(oneAnime) {
+  //renderizamos desde JS el html de un anime fav para así poder guardarlo con la img "x"
+  const html = `<li class="liAnime js-liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="animePicture" 
+      src=${oneAnime.images.jpg.image_url}
+      alt="${oneAnime.title}"
+      />
+      <p> - ${oneAnime.title_english} </p>
+      <p> - ${oneAnime.title} </p>
+      <img class="delete" src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
+    </li>`;
+  return html;
+}
+
 function renderAllFavsAnimes(oneAnime) {
   //para renderizar los favs del LS
   let html = "";
 
   for (oneAnime of favouritesAnimes) {
-    html += renderOneAnime(oneAnime);
+    html += renderOneAnimeFav(oneAnime);
   }
 
   ulFavs.innerHTML = html;
@@ -78,7 +105,7 @@ function handleClickSearchButton(ev) {
         liItems.addEventListener("click", (ev) => {
           const liClicked = ev.currentTarget;
 
-          liClicked.classList.toggle("favourites");
+          liClicked.classList.add("favourites");
 
           // obtenemos el objeto del "li" que hemos hecho click
           const id_hook = liClicked.dataset.hook;
@@ -93,6 +120,7 @@ function handleClickSearchButton(ev) {
             const clickedAnime = allAnimes.find(
               (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
             );
+            console.log(clickedAnime);
 
             //añadir objeto al array de favoritos + al LS
             favouritesAnimes.push(clickedAnime);
@@ -102,14 +130,14 @@ function handleClickSearchButton(ev) {
             );
 
             //generamos otro li a partir de esos datos y así renderizarlo en el html
-            const htmlOneAnime = renderOneAnime(clickedAnime);
+            const htmlOneAnime = renderOneAnimeFav(clickedAnime);
 
             //ponemos el li en  la lista de favoritos
             ulFavs.innerHTML += htmlOneAnime;
-
-            //añadir la "x" para eliminar
-            let htmlOneAnimeChild = ulFavs.lastElementChild;
-            htmlOneAnimeChild.appendChild(xImg);
+          } else {
+            //Quitar de favoritos
+            favouritesAnimes.splice(oneAnimePositionFromFavs, 1);
+            renderAllFavsAnimes();
           }
         });
       });
