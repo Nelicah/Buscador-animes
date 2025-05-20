@@ -47,6 +47,17 @@ function renderAllAnimes() {
   animeList.innerHTML = html;
 }
 
+function renderAllFavsAnimes(oneAnime) {
+  //para renderizar los favs del LS
+  let html = "";
+
+  for (oneAnime of favouritesAnimes) {
+    html += renderOneAnime(oneAnime);
+  }
+
+  ulFavs.innerHTML = html;
+}
+
 function handleClickSearchButton(ev) {
   ev.preventDefault();
   const anime = searchInput.value;
@@ -78,8 +89,12 @@ function handleClickSearchButton(ev) {
               (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
             );
 
-            //añadir objeto al array de favoritos
+            //añadir objeto al array de favoritos + al LS
             favouritesAnimes.push(clickedAnime);
+            localStorage.setItem(
+              "favourites",
+              JSON.stringify(favouritesAnimes)
+            );
 
             //generamos otro li a partir de esos datos y así renderizarlo en el html
             const htmlOneAnime = renderOneAnime(clickedAnime);
@@ -94,4 +109,11 @@ function handleClickSearchButton(ev) {
 
 //EVENTOS
 searchButton.addEventListener("click", handleClickSearchButton);
+
 //Cuando carga la página
+const favsFromLS = JSON.parse(localStorage.getItem("favourites"));
+console.log(favsFromLS);
+if (favsFromLS !== null) {
+  favouritesAnimes = favsFromLS;
+  renderAllFavsAnimes();
+}
