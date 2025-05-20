@@ -5,6 +5,7 @@ const searchButton = document.querySelector(".js_searchButton");
 const animeList = document.querySelector(".js_animeList");
 const resultTitle = document.querySelector(".js-resultTitle");
 const favSection = document.querySelector(".js-favSection");
+const resetButton = document.querySelector(".js-resetButton");
 
 // añadiendo texto al h2
 const resultContent = document.createTextNode("Resultados");
@@ -148,8 +149,18 @@ function handleClickSearchButton(ev) {
 }
 //fin función búsqueda
 
+function handleClickResetButton() {
+  favouritesAnimes = [];
+  searchInput.value = "";
+  localStorage.removeItem("favourites");
+  renderAllFavsAnimes();
+  renderAllAnimes();
+  location.reload(); // recarga la página
+}
+
 //EVENTOS
 searchButton.addEventListener("click", handleClickSearchButton);
+resetButton.addEventListener("click", handleClickResetButton);
 
 //CUANDO CARGA LA PÁGINA
 const favsFromLS = JSON.parse(localStorage.getItem("favourites"));
