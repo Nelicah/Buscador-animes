@@ -74,7 +74,7 @@ function renderOneAnimeFav(oneAnime) {
       />
       <p> - ${oneAnime.title_english} </p>
       <p> - ${oneAnime.title} </p>
-      <img class="delete" src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
+      <img class="delete js-deleteImg" data-hook=${oneAnime.mal_id} src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
     </li>`;
   return html;
 }
@@ -88,8 +88,11 @@ function renderAllFavsAnimes(oneAnime) {
   }
 
   ulFavs.innerHTML = html;
+
+  addDeleteListeners();
 }
 
+//comienzo función de búsqueda
 function handleClickSearchButton(ev) {
   ev.preventDefault();
   const anime = searchInput.value;
@@ -105,7 +108,7 @@ function handleClickSearchButton(ev) {
         liItems.addEventListener("click", (ev) => {
           const liClicked = ev.currentTarget;
 
-          liClicked.classList.add("favourites");
+          liClicked.classList.toggle("favourites");
 
           // obtenemos el objeto del "li" que hemos hecho click
           const id_hook = liClicked.dataset.hook;
@@ -120,7 +123,6 @@ function handleClickSearchButton(ev) {
             const clickedAnime = allAnimes.find(
               (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
             );
-            console.log(clickedAnime);
 
             //añadir objeto al array de favoritos + al LS
             favouritesAnimes.push(clickedAnime);
@@ -134,6 +136,7 @@ function handleClickSearchButton(ev) {
 
             //ponemos el li en  la lista de favoritos
             ulFavs.innerHTML += htmlOneAnime;
+            addDeleteListeners(); //para que funcione eliminar favs desde la X
           } else {
             //Quitar de favoritos
             favouritesAnimes.splice(oneAnimePositionFromFavs, 1);
@@ -143,13 +146,34 @@ function handleClickSearchButton(ev) {
       });
     });
 }
+//fin función búsqueda
 
 //EVENTOS
 searchButton.addEventListener("click", handleClickSearchButton);
 
-//Cuando carga la página
+//CUANDO CARGA LA PÁGINA
 const favsFromLS = JSON.parse(localStorage.getItem("favourites"));
 if (favsFromLS !== null) {
   favouritesAnimes = favsFromLS;
   renderAllFavsAnimes();
+}
+
+function addDeleteListeners() {
+  const allDeleteImg = document.querySelectorAll(".js-deleteImg");
+  allDeleteImg.forEach((deleteItem) => {
+    deleteItem.addEventListener("click", (ev) => {
+      const deleteClicked = ev.currentTarget;
+      const idDelete_hook = deleteClicked.dataset.hook;
+      const animeForDelete = favouritesAnimes.findIndex(
+        (oneAnimeFav) => oneAnimeFav.mal_id === parseInt(idDelete_hook)
+      );
+      if (animeForDelete !== -1) {
+        favouritesAnimes.splice(animeForDelete, 1);
+        //actualizamos el LS
+        localStorage.setItem("favourites", JSON.stringify(favouritesAnimes));
+        renderAllFavsAnimes();
+        addDeleteListeners();
+      }
+    });
+  });
 }
