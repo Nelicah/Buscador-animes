@@ -18,6 +18,11 @@ favTitle.appendChild(favContent);
 favSection.appendChild(favTitle);
 favSection.appendChild(ulFavs);
 
+// creando las "x" para eliminar favoritos
+const xImg = document.createElement("img");
+xImg.src = "./images/marca-de-la-cruz.png";
+xImg.alt = "cruz para eliminar favorito";
+
 //DATOS
 let allAnimes = [];
 let favouritesAnimes = [];
@@ -101,6 +106,10 @@ function handleClickSearchButton(ev) {
 
             //ponemos el li en  la lista de favoritos
             ulFavs.innerHTML += htmlOneAnime;
+
+            //añadir la "x" para eliminar
+            let htmlOneAnimeChild = ulFavs.lastElementChild;
+            htmlOneAnimeChild.appendChild(xImg);
           }
         });
       });
@@ -112,7 +121,6 @@ searchButton.addEventListener("click", handleClickSearchButton);
 
 //Cuando carga la página
 const favsFromLS = JSON.parse(localStorage.getItem("favourites"));
-console.log(favsFromLS);
 if (favsFromLS !== null) {
   favouritesAnimes = favsFromLS;
   renderAllFavsAnimes();
