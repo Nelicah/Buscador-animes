@@ -4,6 +4,20 @@
   padding: 0;
 }
 
+body {
+  margin: 10px;
+  background-color: lightgray;
+}
+
+.title {
+  text-decoration: underline;
+}
+
+.favSection {
+  text-align: center;
+  background-color: lightblue;
+}
+
 .animePicture {
   width: 100%;
   
@@ -27,7 +41,15 @@
 }
 
 .favourites {
-  border: solid 6px darkgrey;
+  border: solid 6px lightyellow;
   background-color: black;
   color: white;
+}
+
+.p1 {
+  color: yellow;
+}
+
+.p2 {
+  color: lightcoral;
 }

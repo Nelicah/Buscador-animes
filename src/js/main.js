@@ -7,7 +7,7 @@ const resultTitle = document.querySelector(".js-resultTitle");
 const favSection = document.querySelector(".js-favSection");
 const resetButton = document.querySelector(".js-resetButton");
 
-// añadiendo texto al h2
+// añadiendo texto al h2 de la búsqueda
 const resultContent = document.createTextNode("Resultados");
 resultTitle.appendChild(resultContent);
 
@@ -38,8 +38,8 @@ function renderOneAnime(oneAnime) {
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
-      <p> - ${oneAnime.title_english} </p>
-      <p> - ${oneAnime.title} </p>
+      <p class="p1"> - ${oneAnime.title_english} </p>
+      <p class="p2"> - ${oneAnime.title} </p>
     </li>`;
     return html;
   } else {
@@ -48,8 +48,8 @@ function renderOneAnime(oneAnime) {
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
-      <p> - ${oneAnime.title_english} </p>
-      <p> - ${oneAnime.title} </p>
+      <p class="p1"> - ${oneAnime.title_english} </p>
+      <p class="p2"> - ${oneAnime.title} </p>
     </li>`;
     return html;
   }
@@ -73,8 +73,8 @@ function renderOneAnimeFav(oneAnime) {
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
-      <p> - ${oneAnime.title_english} </p>
-      <p> - ${oneAnime.title} </p>
+      <p class="p1"> - ${oneAnime.title_english} </p>
+      <p class="p2"> - ${oneAnime.title} </p>
       <img class="delete js-deleteImg" data-hook=${oneAnime.mal_id} src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
     </li>`;
   return html;
