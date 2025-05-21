@@ -15,16 +15,27 @@
   <body>
     <header></header>
     <main class="mb-1">
-      <section class="searchAnime">
-        <h1 class="title">Buscador de series de Anime</h1>
-        <input type="text" class="searchInput js_searchInput" />
-        <input class="js_searchButton" type="submit" value="Buscar" />
-        <button class="js-resetButton">Reset</button>
+      <section class="search-anime">
+        <div class="title-and-gif">
+          <h1 class="title">Buscador de series de Anime</h1>
+          <img
+            src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDVuNTk0Nmlyd3FlZXh3M3hzeDlyYmg5ZHE5dnY2djh4N25idGNkaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fX2tHgGgfzMOD12DRo/giphy.gif"
+            alt="chica anime"
+            class="anime-gif"
+          />
+        </div>
+        <input type="text" class="search-input js_searchInput" />
+        <input
+          class="js_searchButton search-button"
+          type="submit"
+          value="Buscar"
+        />
+        <button class="js_resetButton reset-button">Reset</button>
       </section>
-      <div class="totalAnimes">
-        <section class="js-favSection favSection"></section>
+      <div class="total-animes">
+        <section class="js_favSection fav-section"></section>
         <section class="displayAnime">
-          <h2 class="js-resultTitle resultTitle"></h2>
+          <h2 class="js_resultTitle resultTitle"></h2>
           <ul class="animeList js_animeList"></ul>
         </section>
       </div>

@@ -13,12 +13,47 @@ body {
   text-decoration: underline;
 }
 
-.favSection {
+.search-anime {
+  margin-bottom: 20px;
+}
+.anime-gif {
+  width: 50px;
+}
+
+.title-and-gif {
+  display: flex;
+  gap: 20px;
+}
+
+.search-input {
+  border-width: 3px;
+  border-color: aqua;
+  height: 26px;
+  width: 300px;
+}
+
+.search-button {
+  background-color: aqua;
+  height: 24px;
+  width: 60px;
+  border-radius: 10%;
+  margin-inline: 5px;
+}
+
+.reset-button {
+  background-color: aqua;
+  height: 24px;
+  width: 60px;
+  border-radius: 10%;
+}
+
+
+.fav-section {
   text-align: center;
   background-color: lightblue;
 }
 
-.animePicture {
+.anime-picture {
   width: 100%;
   
 }
@@ -27,12 +62,12 @@ body {
   font-size: 20px;
 }
 
-.totalAnimes {
+.total-animes {
   display:flex;
   gap: 20px;
 }
 
-.liAnime {
+.li-anime {
   list-style: none;
   box-sizing: content-box;
   width: 230px;
@@ -52,4 +87,8 @@ body {
 
 .p2 {
   color: lightcoral;
+}
+
+.delete {
+  margin: 5px;
 }

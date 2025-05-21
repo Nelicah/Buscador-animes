@@ -3,9 +3,9 @@
 const searchInput = document.querySelector(".js_searchInput");
 const searchButton = document.querySelector(".js_searchButton");
 const animeList = document.querySelector(".js_animeList");
-const resultTitle = document.querySelector(".js-resultTitle");
-const favSection = document.querySelector(".js-favSection");
-const resetButton = document.querySelector(".js-resetButton");
+const resultTitle = document.querySelector(".js_resultTitle");
+const favSection = document.querySelector(".js_favSection");
+const resetButton = document.querySelector(".js_resetButton");
 
 // añadiendo texto al h2 de la búsqueda
 const resultContent = document.createTextNode("Resultados");
@@ -33,8 +33,8 @@ function renderOneAnime(oneAnime) {
   );
 
   if (oneAnimePositionFromFavs === -1) {
-    const html = `<li class="liAnime js-liAnime" data-hook=${oneAnime.mal_id}>
-      <img class="animePicture" 
+    const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="anime-picture" 
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
@@ -43,8 +43,8 @@ function renderOneAnime(oneAnime) {
     </li>`;
     return html;
   } else {
-    const html = `<li class="liAnime js-liAnime favourites" data-hook=${oneAnime.mal_id}>
-      <img class="animePicture" 
+    const html = `<li class="li-anime js_liAnime favourites" data-hook=${oneAnime.mal_id}>
+      <img class="anime-picture" 
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
@@ -68,14 +68,14 @@ function renderAllAnimes() {
 
 function renderOneAnimeFav(oneAnime) {
   //renderizamos desde JS el html de un anime fav para así poder guardarlo con la img "x"
-  const html = `<li class="liAnime js-liAnime" data-hook=${oneAnime.mal_id}>
-      <img class="animePicture" 
+  const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="anime-picture" 
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
       <p class="p1"> - ${oneAnime.title_english} </p>
       <p class="p2"> - ${oneAnime.title} </p>
-      <img class="delete js-deleteImg" data-hook=${oneAnime.mal_id} src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
+      <img class="delete js_deleteImg" data-hook=${oneAnime.mal_id} src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
     </li>`;
   return html;
 }
@@ -103,7 +103,7 @@ function handleClickSearchButton(ev) {
       allAnimes = data.data;
       renderAllAnimes();
 
-      const liAnime = document.querySelectorAll(".js-liAnime");
+      const liAnime = document.querySelectorAll(".js_liAnime");
 
       liAnime.forEach((liItems) => {
         liItems.addEventListener("click", (ev) => {
@@ -170,7 +170,7 @@ if (favsFromLS !== null) {
 }
 
 function addDeleteListeners() {
-  const allDeleteImg = document.querySelectorAll(".js-deleteImg");
+  const allDeleteImg = document.querySelectorAll(".js_deleteImg");
   allDeleteImg.forEach((deleteItem) => {
     deleteItem.addEventListener("click", (ev) => {
       const deleteClicked = ev.currentTarget;
