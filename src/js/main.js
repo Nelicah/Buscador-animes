@@ -25,9 +25,6 @@ let favouritesAnimes = [];
 
 //FUNCIONES
 function renderOneAnime(oneAnime) {
-  //renderizamos desde JS el html de un anime
-  //modificado para que aparezca "marcado" si está en fav
-
   const oneAnimePositionFromFavs = favouritesAnimes.findIndex(
     (oneAnimeFav) => oneAnimeFav.mal_id === oneAnime.mal_id
   );
@@ -69,7 +66,6 @@ function renderOneAnime(oneAnime) {
 }
 
 function renderAllAnimes() {
-  //renderizamos todos los animes que tengamos
   let html = "";
 
   for (const oneAnime of allAnimes) {
@@ -80,7 +76,7 @@ function renderAllAnimes() {
 }
 
 function renderOneAnimeFav(oneAnime) {
-  //renderizamos desde JS el html de un anime fav para así poder guardarlo con la img "x"
+  //para icono "x"
   const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
       <img class="anime-picture" 
       src=${oneAnime.images.jpg.image_url}
@@ -94,7 +90,6 @@ function renderOneAnimeFav(oneAnime) {
 }
 
 function renderAllFavsAnimes(oneAnime) {
-  //para renderizar los favs del LS
   let html = "";
 
   for (oneAnime of favouritesAnimes) {
@@ -121,38 +116,28 @@ function handleClickSearchButton(ev) {
       liAnime.forEach((liItems) => {
         liItems.addEventListener("click", (ev) => {
           const liClicked = ev.currentTarget;
-
           liClicked.classList.toggle("favourites");
 
-          // obtenemos el objeto del "li" que hemos hecho click
           const id_hook = liClicked.dataset.hook;
-
-          //averiguamos si es favorita
           const oneAnimePositionFromFavs = favouritesAnimes.findIndex(
             (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
           );
 
-          //añadimos a fav el anime sólo si no está en la lista (evitamos duplicidad)
+          //evitamos duplicidad
           if (oneAnimePositionFromFavs === -1) {
             const clickedAnime = allAnimes.find(
               (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
             );
-
-            //añadir objeto al array de favoritos + al LS
             favouritesAnimes.push(clickedAnime);
             localStorage.setItem(
               "favourites",
               JSON.stringify(favouritesAnimes)
             );
 
-            //generamos otro li a partir de esos datos y así renderizarlo en el html
             const htmlOneAnime = renderOneAnimeFav(clickedAnime);
-
-            //ponemos el li en  la lista de favoritos
             ulFavs.innerHTML += htmlOneAnime;
             addDeleteListeners(); //para que funcione eliminar favs desde la X
           } else {
-            //Quitar de favoritos
             favouritesAnimes.splice(oneAnimePositionFromFavs, 1);
             renderAllFavsAnimes();
           }
@@ -166,7 +151,6 @@ function handleClickResetButton() {
   favouritesAnimes = [];
   searchInput.value = "";
   localStorage.removeItem("favourites");
-  renderAllFavsAnimes();
   renderAllAnimes();
   location.reload(); // recarga la página
 }
