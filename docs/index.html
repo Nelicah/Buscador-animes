@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buscador de animes</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    
+    <link rel="icon" href="./images/favicon.png" />
+    <link rel="stylesheet" href="./assets/index-b5dbc481.css">
+  </head>
+
+  <body>
+    <header></header>
+    <main class="mb-1">
+      <section class="search-anime">
+        <div class="title-and-gif">
+          <h1 class="title">Buscador de series de Anime</h1>
+          <img
+            src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDVuNTk0Nmlyd3FlZXh3M3hzeDlyYmg5ZHE5dnY2djh4N25idGNkaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fX2tHgGgfzMOD12DRo/giphy.gif"
+            alt="chica anime"
+            class="anime-gif"
+          />
+        </div>
+        <input type="text" class="search-input js_searchInput" />
+        <input
+          class="js_searchButton search-button"
+          type="submit"
+          value="Buscar"
+        />
+        <button class="js_resetButton reset-button">Reset</button>
+      </section>
+      <div class="total-animes">
+        <section class="js_favSection fav-section"></section>
+        <section class="display-anime">
+          <h2 class="js_resultTitle result-title"></h2>
+          <ul class="anime-list js_animeList"></ul>
+        </section>
+      </div>
+    </main>
+    <footer></footer>
+
+    <script src="./js/main.js"></script>
+  </body>
+</html>
