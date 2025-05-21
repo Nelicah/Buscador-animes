@@ -77,13 +77,12 @@ function renderAllAnimes() {
 
 function renderOneAnimeFav(oneAnime) {
   //para icono "x"
-  const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
-      <img class="anime-picture" 
+  const html = `<li class="li-anime2 js_liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="anime-picture2" 
       src=${oneAnime.images.jpg.image_url}
       alt="${oneAnime.title}"
       />
-      <p class="p1"> - ${oneAnime.title_english} </p>
-      <p class="p2"> - ${oneAnime.title} </p>
+      <p class="p2-fav"> - ${oneAnime.title} </p>
       <img class="delete js_deleteImg" data-hook=${oneAnime.mal_id} src="./images/marca-de-la-cruz.png" alt="cruz para eliminar favorito" />
     </li>`;
   return html;

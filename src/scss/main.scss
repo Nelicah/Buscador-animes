@@ -58,6 +58,31 @@ body {
   
 }
 
+.li-anime2 {
+  display:grid;
+  grid-template-columns: 0.5fr 0.3fr 0.2fr;
+  text-align: start;
+  align-items: center;
+  padding-block: 10px;
+}
+
+.p1 {
+  color: orangered;
+}
+
+.p2 {
+  color: lightseagreen;
+}
+
+.p2-fav {
+  color: purple;
+}
+
+.anime-picture2{
+  width: 80%;
+  margin: 10px;
+}
+
 .total-animes {
   display:flex;
   gap: 20px;
@@ -70,7 +95,7 @@ body {
 .anime-list {
   text-align: left;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 0.5fr;
 }
 
 .li-anime {
@@ -85,14 +110,6 @@ body {
   border: solid 6px lightyellow;
   background-color: black;
   color: white;
-}
-
-.p1 {
-  color: orangered;
-}
-
-.p2 {
-  color: lightseagreen;
 }
 
 .delete {
