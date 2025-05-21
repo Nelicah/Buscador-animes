@@ -58,13 +58,19 @@ body {
   
 }
 
-.animeTitle {
-  font-size: 20px;
-}
-
 .total-animes {
   display:flex;
   gap: 20px;
+}
+
+.display-anime {
+  text-align: center;
+}
+
+.anime-list {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .li-anime {
@@ -82,11 +88,11 @@ body {
 }
 
 .p1 {
-  color: yellow;
+  color: orangered;
 }
 
 .p2 {
-  color: lightcoral;
+  color: lightseagreen;
 }
 
 .delete {

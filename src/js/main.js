@@ -32,7 +32,20 @@ function renderOneAnime(oneAnime) {
     (oneAnimeFav) => oneAnimeFav.mal_id === oneAnime.mal_id
   );
 
-  if (oneAnimePositionFromFavs === -1) {
+  if (
+    oneAnime.images.jpg.image_url ===
+    "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png"
+  ) {
+    const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="anime-picture" 
+      src="https://placehold.co/210x300/ffffff/555555?text=TV"
+      alt="${oneAnime.title}"
+      />
+      <p class="p1"> - ${oneAnime.title_english} </p>
+      <p class="p2"> - ${oneAnime.title} </p>
+    </li>`;
+    return html;
+  } else if (oneAnimePositionFromFavs === -1) {
     const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
       <img class="anime-picture" 
       src=${oneAnime.images.jpg.image_url}
