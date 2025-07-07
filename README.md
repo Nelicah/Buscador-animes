@@ -1,4 +1,4 @@
-# Mi proyecto
+# Buscador de animes
 
 Este es el proyecto que se ha pedido para la evaluación final del módulo 2: JS
 
