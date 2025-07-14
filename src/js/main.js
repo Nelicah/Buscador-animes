@@ -29,7 +29,17 @@ function renderOneAnime(oneAnime) {
     (oneAnimeFav) => oneAnimeFav.mal_id === oneAnime.mal_id
   );
 
-  if (
+  if (oneAnime.title_english === null) {
+    const html = `<li class="li-anime js_liAnime" data-hook=${oneAnime.mal_id}>
+      <img class="anime-picture" 
+      src=${oneAnime.images.jpg.image_url}
+      alt="${oneAnime.title}"
+      />
+      <p class="p1"> - ${oneAnime.title} </p>
+      <p class="p2"> - ${oneAnime.title} </p>
+    </li>`;
+    return html;
+  } else if (
     oneAnime.images.jpg.image_url ===
     "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png"
   ) {
@@ -100,51 +110,53 @@ function renderAllFavsAnimes(oneAnime) {
   addDeleteListeners();
 }
 
-//comienzo función de búsqueda
+function fetchAnimes(query) {
+  return fetch(`https://api.jikan.moe/v4/anime?q=${query}`)
+    .then((response) => response.json())
+    .then((data) => data.data);
+}
+
+function addAnimeClickListeners() {
+  const liAnime = document.querySelectorAll(".js_liAnime");
+
+  liAnime.forEach((liItem) => {
+    liItem.addEventListener("click", (ev) => {
+      const liClicked = ev.currentTarget;
+      liClicked.classList.toggle("favourites");
+
+      const id_hook = liClicked.dataset.hook;
+      const oneAnimePositionFromFavs = favouritesAnimes.findIndex(
+        (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
+      );
+
+      //evitamos duplicidad
+      if (oneAnimePositionFromFavs === -1) {
+        const clickedAnime = allAnimes.find(
+          (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
+        );
+        favouritesAnimes.push(clickedAnime);
+        localStorage.setItem("favourites", JSON.stringify(favouritesAnimes));
+
+        const htmlOneAnime = renderOneAnimeFav(clickedAnime);
+        ulFavs.innerHTML += htmlOneAnime;
+        addDeleteListeners(); //para que funcione eliminar favs desde la X
+      } else {
+        favouritesAnimes.splice(oneAnimePositionFromFavs, 1);
+        renderAllFavsAnimes();
+      }
+    });
+  });
+}
+
 function handleClickSearchButton(ev) {
   ev.preventDefault();
-  const anime = searchInput.value;
-  fetch(`https://api.jikan.moe/v4/anime?q=${anime}`)
-    .then((response) => response.json())
-    .then((data) => {
-      allAnimes = data.data;
-      renderAllAnimes();
-
-      const liAnime = document.querySelectorAll(".js_liAnime");
-
-      liAnime.forEach((liItems) => {
-        liItems.addEventListener("click", (ev) => {
-          const liClicked = ev.currentTarget;
-          liClicked.classList.toggle("favourites");
-
-          const id_hook = liClicked.dataset.hook;
-          const oneAnimePositionFromFavs = favouritesAnimes.findIndex(
-            (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
-          );
-
-          //evitamos duplicidad
-          if (oneAnimePositionFromFavs === -1) {
-            const clickedAnime = allAnimes.find(
-              (oneAnime) => oneAnime.mal_id === parseInt(id_hook)
-            );
-            favouritesAnimes.push(clickedAnime);
-            localStorage.setItem(
-              "favourites",
-              JSON.stringify(favouritesAnimes)
-            );
-
-            const htmlOneAnime = renderOneAnimeFav(clickedAnime);
-            ulFavs.innerHTML += htmlOneAnime;
-            addDeleteListeners(); //para que funcione eliminar favs desde la X
-          } else {
-            favouritesAnimes.splice(oneAnimePositionFromFavs, 1);
-            renderAllFavsAnimes();
-          }
-        });
-      });
-    });
+  const anime = searchInput.value.trim();
+  fetchAnimes(anime).then((data) => {
+    allAnimes = data;
+    renderAllAnimes();
+    addAnimeClickListeners();
+  });
 }
-//fin función búsqueda
 
 function handleClickResetButton() {
   favouritesAnimes = [];
@@ -157,6 +169,11 @@ function handleClickResetButton() {
 //EVENTOS
 searchButton.addEventListener("click", handleClickSearchButton);
 resetButton.addEventListener("click", handleClickResetButton);
+searchInput.addEventListener("keydown", (ev) => {
+  if (ev.key === "Enter") {
+    handleClickSearchButton(ev);
+  }
+});
 
 //CUANDO CARGA LA PÁGINA
 const favsFromLS = JSON.parse(localStorage.getItem("favourites"));
